@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>JSONP跨域</title>
+    <style>
+        p{
+            text-align: center;
+        }
+        div{
+            margin-bottom: 10px;
+        }
+        .input{
+            transform: translate(40%);
+        }
+    </style>
+</head>
+<body>
+<div>
+    <p>手机号码归属地查询</p>
+   <div class="input">
+       <span>TEL:</span>
+       <input type="text" id="tel">
+       <button id="btn">查询</button>
+   </div>
+    <div class="input" id="res"></div>
+</div>
+<script src="jsonp.js"></script>
+<script>
+    let btn=document.getElementById("btn");
+    btn.addEventListener('click',function(){
+
+        let tel = document.getElementById('tel').value;
+            jsonp({
+            url:"http://api.jisuapi.com/shouji/query",
+            appkey:"d06f93228c91fe10",
+           tel:tel,
+            success:function (data){
+                console.log(data);
+                let res = document.getElementById("res");
+                if(!data.result){
+                    res.innerText = "未知归属地";
+                }
+                else{
+                    res.innerText = data.result.province+"-"+data.result.city;
+                }
+            }
+        })
+    },false)
+</script>
+</body>
+</html>
